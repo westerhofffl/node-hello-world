@@ -64,7 +64,7 @@ const leastCommonMutl = (arr) => {
     // Output: 60
     const gcd = (a, b) =>{
         if (b === 0){
-            return b;
+            return a;
         }else{
             return gcd(b, a%b);
         }
@@ -72,13 +72,30 @@ const leastCommonMutl = (arr) => {
     const lcm = (a, b) => {
         return (a*b)/gcd(a, b);
     }
+    const getLCM = (arr) =>{
+        let resultArr = []
+        for (let i=0; i< arr.length - 1; i++){
+            for (let t=i+1; t<arr.length;t++){
+                let result = lcm(arr[i], arr[t]);
+                // console.log(`lcm of ${arr[i]} and ${arr[t]} is ${result}`);
+                resultArr.push(result);
+            }
 
-    let resultArr = []
-    for (let i=0; i< arr.length - 1; i++){
-        resultArr.push(lcm(arr[i], arr[i+1]));
+        }
+        // console.log(`resultArr: [${ resultArr}]`);
+        if (!resultArr.reduce((a, b) => { return (a === b) ? a : NaN; })){
+            getLCM (resultArr);
+        }else{
+            console.log(`LCM = ${resultArr[0]}`);
+            return;
+        }
+
+
     }
-    console.log('resultArr', resultArr);
+    console.log(arr);
+    getLCM(arr);
+
 }
 
 
-leastCommonMutl([4, 6, 10]);
+leastCommonMutl([4, 6, 10 ]);
