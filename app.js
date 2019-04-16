@@ -2,7 +2,6 @@ const message = 'Hello World';
 console.log(message, 'from Gitpod!');
 let arr =[];
 
-debugger
 // Find the length of longest continuous subarray within an array (containing at least one number) whose sum equals zero.
 
 // For example, given the array [1,0,-1,2],
@@ -10,35 +9,46 @@ debugger
 // The longest continuous subarray of zero-sum is [1,0,-1] which has length = 3
 const findSqu = (arr) =>{
     let count = 0;
-    let maxCount = 0, maxStart = 0;
-   for (let i=0;i<arr.length-2;i++){
-        count=2;
-        let sum = arr.slice(i, i+count).reduce((sum, item) => {
-            return sum+item});
+    let maxCount = 0, maxStart = 0, sum = 0;
+   for (let i=0;i<arr.length;i++){
+        count=1;
 
-        while(sum === 0 ){
-            if (count > maxCount){
+
+        while((count + i) <= arr.length){
+            sum = arr.slice(i, i+count).reduce((sum, item) => sum + item);
+            if (sum === 0 && count > maxCount ){
                 maxCount = count;
                 maxStart = i;
+
             }
+            // console.log(`Sum: ${sum}, Start: ${maxStart} End: ${maxStart + maxCount} arr: [${arr.slice(i, i+count)}]`);
             count = count +1 ;
-            sum = arr.slice(i, i+count).reduce((sum, item) => {
-            return sum+item});
         }
     }
     return {start: maxStart, count: maxCount}
 };
 
-const printResult = (result) =>{
+const printResult = (arr, result) =>{
+    console.log(arr.toString());
     if (result.count > 0){
-        console.log(`Max squence is ${arr.slice(result.start, result.count + 1)} starting at index ${result.start}`)
+        console.log(`   Max squence is ${arr.slice(result.start, result.start + result.count )} starting at index ${result.start}`)
     }else{
-        console.log('None found')
+        console.log('   None found')
     }
 }
 
 arr = [1,0,-1,2];
-printResult(findSqu(arr));
+// console.log(arr);
+printResult(arr, findSqu(arr));
 
-arr = Array.from({length: 40}, () => Math.floor(Math.random() * 21)-10);
-printResult(findSqu(arr));
+arr = [0,-1,2,0,-1,2,1,0,0,0,0,0,0,0,-1,2];
+// console.log(arr);
+printResult(arr, findSqu(arr));
+
+let min = -3, max = 3, n =20;
+arr = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+printResult(arr, findSqu(arr));
+
+min = -4; max = 4; n = 30;
+arr = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+printResult(arr, findSqu(arr));
