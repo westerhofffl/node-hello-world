@@ -98,4 +98,19 @@ const leastCommonMutl = (arr) => {
 }
 
 
-leastCommonMutl([4, 6, 10 ]);
+// leastCommonMutl([4, 6, 10 ]);
+
+let cache = {}
+const cacheIF = (action='set', key=null, value=null, timeout=50000) => {
+    if (action === 'set'){
+        cache[key] = value;
+        setTimeout(()=>{
+            delete cache[key];
+        }, timeout);
+        return true
+    }else if (action === get){
+        return cache.hasOwnProperty(key) ? cache[key] : null;
+    }
+}
+casheIF('set', 'sword', true);
+casheIF('get', 'sword');
