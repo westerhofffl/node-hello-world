@@ -107,7 +107,7 @@ const cacheIF = (action='set', key=null, value=null, timeout=50000) => {
             delete cache[key];
         }, timeout);
         return `${key} saved`;
-    }else if (action === get){
+    }else if (action === 'get'){
         return cache.hasOwnProperty(key) ? `${key} found!` : `${key} not found:(`;
     }
 }
