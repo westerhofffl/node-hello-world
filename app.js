@@ -14,7 +14,6 @@ const runSequ = () =>{
     for (let i=0;i<arr.length;i++){
             count=1;
 
-
             while((count + i) <= arr.length){
                 sum = arr.slice(i, i+count).reduce((sum, item) => sum + item);
                 if (sum === 0 && count > maxCount ){
@@ -107,10 +106,10 @@ const cacheIF = (action='set', key=null, value=null, timeout=50000) => {
         setTimeout(()=>{
             delete cache[key];
         }, timeout);
-        return true
+        return `${key} saved`;
     }else if (action === get){
-        return cache.hasOwnProperty(key) ? cache[key] : null;
+        return cache.hasOwnProperty(key) ? `${key} found!` : `${key} not found:(`;
     }
 }
-casheIF('set', 'sword', true);
-casheIF('get', 'sword');
+console.log (cacheIF('set', 'sword', true));
+console.log(cacheIF('get', 'sword'));
