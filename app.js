@@ -111,5 +111,7 @@ const cacheIF = (action='set', key=null, value=null, timeout=50000) => {
         return cache.hasOwnProperty(key) ? `${key} found!` : `${key} not found:(`;
     }
 }
-console.log (cacheIF('set', 'sword', true));
-console.log(cacheIF('get', 'sword'));
+console.log (cacheIF('set', 'sword', true, 100));
+setTimeout(()=>{
+    console.log(cacheIF('get', 'sword'));
+}, 200)
