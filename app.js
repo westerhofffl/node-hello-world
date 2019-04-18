@@ -1,3 +1,4 @@
+
 const message = 'Node Puzzles';
 console.log(message, 'from Gitpod!');
 
@@ -111,7 +112,89 @@ const cacheIF = (action='set', key=null, value=null, timeout=50000) => {
         return cache.hasOwnProperty(key) ? `${key} found!` : `${key} not found:(`;
     }
 }
-console.log (cacheIF('set', 'sword', true, 100));
-setTimeout(()=>{
-    console.log(cacheIF('get', 'sword'));
-}, 200)
+// console.log (cacheIF('set', 'sword', true, 100));
+// setTimeout(()=>{
+//     console.log(cacheIF('get', 'sword'));
+// }, 200)
+
+
+const findMedian = (arr1, arr2) =>{
+    let answer = null, start = 0;
+    answer  = [...arr1, ...arr2].sort((a, b)=>a-b);
+    // console.log(answer);
+    if (answer.length % 2 === 0){
+        return (answer[answer.length/2 -1 ] + answer[answer.length/2 ])/2
+    }else {
+        return answer[(answer.length+1)/2 -1]
+    }
+}
+const getMed = (arr) =>{
+    if (arr.length % 2 === 0){
+        return {med: (arr[arr.length/2 -1 ] + arr[arr.length/2 ])/2, idx: arr.length/2 };
+    }else{
+        return {med: arr[(arr.length+1)/2 -1], idx: (arr.length+1)/2 -1};
+    }
+}
+const findMedianR = (arr1, arr2) =>{
+
+    if (arr1.length === 2 || arr2.length === 2){
+        let answer  = [...arr1, ...arr2].sort((a, b)=>a-b);
+        if (answer.length % 2 === 0){
+            return (answer[answer.length/2 -1 ] + answer[answer.length/2 ])/2;
+        }else {
+            return answer[(answer.length+1)/2 -1]
+        }
+    }else{
+        let arr1M = getMed(arr1);
+        let arr2M = getMed(arr2);
+        let arr1S, arr2S;
+        if (arr1M.med > arr2M.med){
+            if (arr1.length %2 ===0){
+                arr1S = arr1.length/2 %2 === 0 ? arr1.length/2 - 1 : arr1.length/2 + 1;
+                arr2S = arr2.length/2 %2 === 0 ? (arr1.length+1)/2 + 1: (arr1.length+1)/2  -1;
+            }else{
+
+            }
+
+
+            console.log(arr1.slice(0, arr1S), arr2.slice(arr2S));
+            return findMedianR(arr1.slice(0, arr1S), arr2.slice(arr2S));
+
+        }else if (arr1M.med < arr2M.med) {
+            let arr1S = arr1.length/2 %2 === 0 ?  arr1.length/2 - 1 : arr1.length/2 + 1 ;
+            let arr2S = arr2.length/2 %2 === 0 ? (arr1.length+1)/2  +1 : (arr1.length+1)/2 - 1 ;
+
+            console.log(arr1.slice(arr1S), arr2.slice(0, arr2S));
+            return findMedianR(arr1.slice(arr1S), arr2.slice(0, arr2S));
+        }
+
+
+    }
+
+}
+
+let arr1 = [1, 3, 5];
+let arr2 = [2, 4, 6];
+// let start = new Date().getTime();
+// // console.log(arr1, arr2);
+// console.log(`Median is: ${findMedian(arr1, arr2)} in ${new Date().getTime() - start}`);
+// start = new Date().getTime();
+// // console.log(arr1, arr2);
+// console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
+
+arr1 = [1, 2, 3, 4,  5,  6];
+arr2 = [0, 0, 0, 0, 10, 10];
+// console.log(arr1, arr2);
+start = new Date().getTime();
+// console.log(`Median is: ${findMedian(arr1, arr2)} in ${new Date().getTime() - start}`);
+start = new Date().getTime();
+// console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
+
+let min = 0, max = 100, n =16;
+arr1 = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min).sort((a, b)=>a-b);
+arr2 = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min).sort((a, b)=>a-b);
+// console.log(arr1, arr2);
+start = new Date().getTime();
+console.log(`Median is: ${findMedian(arr1, arr2)} in ${new Date().getTime() - start}`);
+start = new Date().getTime();
+console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
