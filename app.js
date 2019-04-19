@@ -149,20 +149,35 @@ const findMedianR = (arr1, arr2) =>{
         let arr2M = getMed(arr2);
         let arr1S, arr2S;
         if (arr1M.med > arr2M.med){
-            if (arr1.length %2 ===0){
-                arr1S = arr1.length/2 %2 === 0 ? arr1.length/2 - 1 : arr1.length/2 + 1;
-                arr2S = arr2.length/2 %2 === 0 ? (arr1.length+1)/2 + 1: (arr1.length+1)/2  -1;
+            // bottom 1/2 arr1
+            if (arr1.length %2 === 0){
+                arr1S = arr1.length/2 +1;
             }else{
-
+                arr1S = (arr1.length+1)/2;
             }
-
+             // upper 1/2 arr2
+            if (arr2.length %2 === 0){
+                arr2S = arr2.length/2 -1;
+            }else{
+                arr2S = (arr2.length-1)/2;
+            }
 
             console.log(arr1.slice(0, arr1S), arr2.slice(arr2S));
             return findMedianR(arr1.slice(0, arr1S), arr2.slice(arr2S));
 
         }else if (arr1M.med < arr2M.med) {
-            let arr1S = arr1.length/2 %2 === 0 ?  arr1.length/2 - 1 : arr1.length/2 + 1 ;
-            let arr2S = arr2.length/2 %2 === 0 ? (arr1.length+1)/2  +1 : (arr1.length+1)/2 - 1 ;
+            // upper 1/2 arr1
+            if (arr1.length %2 === 0){
+                arr1S = arr1.length/2 -1;
+            }else{
+                arr1S = (arr1.length -1)/2;
+            }
+             // lower 1/2 arr2
+            if (arr2.length %2 === 0){
+                arr2S = arr2.length/2 +1;
+            }else{
+                arr2S = (arr2.length+1)/2;
+            }
 
             console.log(arr1.slice(arr1S), arr2.slice(0, arr2S));
             return findMedianR(arr1.slice(arr1S), arr2.slice(0, arr2S));
