@@ -203,28 +203,94 @@ const findMedianR = (arr1, arr2) =>{
 
 }
 
-let arr1 = [1, 3, 5];
-let arr2 = [2, 4, 6];
-// let start = new Date().getTime();
+// let arr1 = [1, 3, 5];
+// let arr2 = [2, 4, 6];
+// // let start = new Date().getTime();
+// // // console.log(arr1, arr2);
+// // console.log(`Median is: ${findMedian(arr1, arr2)} in ${new Date().getTime() - start}`);
+// // start = new Date().getTime();
+// // // console.log(arr1, arr2);
+// // console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
+
+// arr1 = [1, 2, 3, 4,  5,  6];
+// arr2 = [0, 0, 0, 0, 10, 10];
 // // console.log(arr1, arr2);
+// start = new Date().getTime();
+// // console.log(`Median is: ${findMedian(arr1, arr2)} in ${new Date().getTime() - start}`);
+// start = new Date().getTime();
+// // console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
+
+// let min = 0, max = 100, n =1000000;
+// arr1 = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min).sort((a, b)=>a-b);
+// arr2 = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min).sort((a, b)=>a-b);
+// // console.log(arr1, arr2);
+// start = new Date().getTime();
 // console.log(`Median is: ${findMedian(arr1, arr2)} in ${new Date().getTime() - start}`);
 // start = new Date().getTime();
-// // console.log(arr1, arr2);
 // console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
 
-arr1 = [1, 2, 3, 4,  5,  6];
-arr2 = [0, 0, 0, 0, 10, 10];
-// console.log(arr1, arr2);
-start = new Date().getTime();
-// console.log(`Median is: ${findMedian(arr1, arr2)} in ${new Date().getTime() - start}`);
-start = new Date().getTime();
-// console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
 
-let min = 0, max = 100, n =1000000;
-arr1 = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min).sort((a, b)=>a-b);
-arr2 = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min).sort((a, b)=>a-b);
-// console.log(arr1, arr2);
-start = new Date().getTime();
-console.log(`Median is: ${findMedian(arr1, arr2)} in ${new Date().getTime() - start}`);
-start = new Date().getTime();
-console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
+///////////////////////////////////////////
+// Missing 2 element missing from sequence
+// missing([4,2,3]) = 1,5
+// ? Does sequence start at 0 or 1
+// ? Array intergers or long ==
+// 1st solve missing one number
+// [1,2,4,5] = 3
+// Boolean array check off of found not found
+// time - O(n)
+// space  O(n)
+// sort array then sequence through and find missing #
+// time  O(n logn)
+// space O(1)
+// xor
+
+//????
+// Missing 1
+// [1,2,4] = 3
+// [1,2,3,4]
+// sum([1,2,3,4]) = 10
+// sum ([1,2,4])) = 7
+// 10-7 = 3
+
+const oneMiss = (arr) =>{
+    let totalxor = 0, arrxor = 0;
+    for (let i=1;i<=arr.length+1;i++){
+        // console.log(totalxor, i, totalxor + i)
+        // totalxor = totalxor + i;
+        totalxor = totalxor ^ i;
+    }
+    for (let i=0;i<arr.length;i++){
+        // console.log(arrxor, i, arr[i])
+        arrxor = arrxor ^ arr[i];
+    }
+    return totalxor ^ arrxor;
+}
+
+// let arr = [1,2,4];
+// console.log(oneMiss(arr))
+
+////////////////
+// [1,2,3,4,5,6]
+// 1,2,5,6] => 3,4
+    missTwo = (arr) =>{
+        let size = arr.length + 2;
+        let sumFull = size * (size+1)/2;
+        let sumarr = arr.reduce((sum, item)=>sum+item);
+        let pivot = Math.floor((sumFull-sumarr)/2);
+
+        let leftxor = 0, rightxor = 0, arrLeftxor = 0, arrRightxor =0;
+        for (let i=1; i<= pivot; i++) leftxor = leftxor + i;
+        for (let i=pivot +1; i<= size; i++) rightxor = rightxor + i;
+        for (let i=0; i<arr.length;i++){
+            if (arr[i] <= pivot){
+                arrLeftxor = arrLeftxor + arr[i];
+            }else{
+                arrRightxor = arrRightxor + arr[i];
+            }
+        }
+        return [leftxor - arrLeftxor, rightxor - arrRightxor]
+    }
+// [1,2,3,4,5,6]
+let arr = [1,2,5,6];
+console.log(missTwo(arr))
