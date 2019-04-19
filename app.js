@@ -294,3 +294,5 @@ const oneMiss = (arr) =>{
 // [1,2,3,4,5,6]
 let arr = [1,2,5,6];
 console.log(missTwo(arr))
+
+//Knapsack time 1:08 https://www.youtube.com/watch?v=iAHQopLuZ4Q
