@@ -129,61 +129,76 @@ const findMedian = (arr1, arr2) =>{
     }
 }
 const getMed = (arr) =>{
+    try{
     if (arr.length % 2 === 0){
-        return {med: (arr[arr.length/2 -1 ] + arr[arr.length/2 ])/2, idx: arr.length/2 };
+        return (arr[arr.length/2 -1 ] + arr[arr.length/2 ])/2;
     }else{
-        return {med: arr[(arr.length+1)/2 -1], idx: (arr.length+1)/2 -1};
+        return arr[(arr.length+1)/2 -1];
+    }
+    }catch(e){
+        console.error(e);
     }
 }
 const findMedianR = (arr1, arr2) =>{
+    try{
+        if (arr1.length === 0 || arr1.length !== arr2.length){
+            return "Array length error";
+        }else if (arr1.length === 1 ){
+            return (arr1[0] + arr2[0])/2;
+        }else if (arr1.length === 2 || arr2.length === 2){
+            let answer  = [...arr1, ...arr2].sort((a, b)=>a-b);
+            if (answer.length % 2 === 0){
+                return (answer[answer.length/2 -1 ] + answer[answer.length/2 ])/2;
+            }else {
+                return answer[(answer.length+1)/2 -1]
+            }
+        }else{
+            let arr1M = getMed(arr1);
+            let arr2M = getMed(arr2);
+            let arr1S, arr2S;
+            if (arr1M === arr2M){
+                return arr1M;
+            }else if (arr1M > arr2M ){
+                // bottom 1/2 arr1
+                if (arr1.length %2 === 0){
+                    arr1S = arr1.length/2 +1;
+                }else{
+                    arr1S = (arr1.length+1)/2;
+                }
+                // upper 1/2 arr2
+                if (arr2.length %2 === 0){
+                    arr2S = arr2.length/2 -1;
+                }else{
+                    arr2S = (arr2.length-1)/2;
+                }
 
-    if (arr1.length === 2 || arr2.length === 2){
-        let answer  = [...arr1, ...arr2].sort((a, b)=>a-b);
-        if (answer.length % 2 === 0){
-            return (answer[answer.length/2 -1 ] + answer[answer.length/2 ])/2;
-        }else {
-            return answer[(answer.length+1)/2 -1]
+                // console.log(arr1.slice(0, arr1S), arr2.slice(arr2S));
+                return findMedianR(arr1.slice(0, arr1S), arr2.slice(arr2S));
+
+            }else if (arr1M  < arr2M ) {
+                // upper 1/2 arr1
+                if (arr1.length %2 === 0){
+                    arr1S = arr1.length/2 -1;
+                }else{
+                    arr1S = (arr1.length -1)/2;
+                }
+                // lower 1/2 arr2
+                if (arr2.length %2 === 0){
+                    arr2S = arr2.length/2 +1;
+                }else{
+                    arr2S = (arr2.length+1)/2;
+                }
+
+                // console.log(arr1.slice(arr1S), arr2.slice(0, arr2S));
+                return findMedianR(arr1.slice(arr1S), arr2.slice(0, arr2S));
+
+            }
+
+
+
         }
-    }else{
-        let arr1M = getMed(arr1);
-        let arr2M = getMed(arr2);
-        let arr1S, arr2S;
-        if (arr1M.med > arr2M.med){
-            // bottom 1/2 arr1
-            if (arr1.length %2 === 0){
-                arr1S = arr1.length/2 +1;
-            }else{
-                arr1S = (arr1.length+1)/2;
-            }
-             // upper 1/2 arr2
-            if (arr2.length %2 === 0){
-                arr2S = arr2.length/2 -1;
-            }else{
-                arr2S = (arr2.length-1)/2;
-            }
-
-            console.log(arr1.slice(0, arr1S), arr2.slice(arr2S));
-            return findMedianR(arr1.slice(0, arr1S), arr2.slice(arr2S));
-
-        }else if (arr1M.med < arr2M.med) {
-            // upper 1/2 arr1
-            if (arr1.length %2 === 0){
-                arr1S = arr1.length/2 -1;
-            }else{
-                arr1S = (arr1.length -1)/2;
-            }
-             // lower 1/2 arr2
-            if (arr2.length %2 === 0){
-                arr2S = arr2.length/2 +1;
-            }else{
-                arr2S = (arr2.length+1)/2;
-            }
-
-            console.log(arr1.slice(arr1S), arr2.slice(0, arr2S));
-            return findMedianR(arr1.slice(arr1S), arr2.slice(0, arr2S));
-        }
-
-
+    } catch(e){
+        console.error(e);
     }
 
 }
@@ -205,7 +220,7 @@ start = new Date().getTime();
 start = new Date().getTime();
 // console.log(`MedianR is: ${findMedianR(arr1, arr2)} in ${new Date().getTime() - start}`);
 
-let min = 0, max = 100, n =16;
+let min = 0, max = 100, n =1000000;
 arr1 = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min).sort((a, b)=>a-b);
 arr2 = Array.from({ length: n }, () => Math.floor(Math.random() * (max - min + 1)) + min).sort((a, b)=>a-b);
 // console.log(arr1, arr2);
