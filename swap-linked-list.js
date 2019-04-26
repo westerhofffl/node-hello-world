@@ -14,45 +14,18 @@ function ListNode(data){
     this.next = null;
 }
 
-var swapPairs = function(head) {
-    const swap = (head) =>{
-        if(!head.next){
-            return head;
-        }else {
-            let nA = head.val;
-            let nB = head.next.val;
-            head.val = nB;
-            head.next.val = nA;
-    
-            if(head.next.next){
-                head.next.next = swap(head.next.next);
-                return head
-                
-            }else{
-                return head;
-            }
-        }
+const swapPairs = (head) => {
+    if (!head){
+        return null;
     }
-    let A = null;
-    let B = null;
-    if(!head.next){
+    if (!head.next){
         return head;
-    }else {
-        A = head.val;
-        B = head.next.val;
-        head.next.val = A;
-        head.val = B;
-
-        if (!head.next.next){
-            return head;
-        }else {
-            let subList = swap(head.next.next);
-            head.next.next = subList;
-            return head;
-        }   
     }
-
-
+    const node = swapPairs(head.next.next);
+    const p2 = head.next;
+    p2.next = head;
+    head.next = node;
+    return p2;
 };
 
 let headS = new ListNode(1);
